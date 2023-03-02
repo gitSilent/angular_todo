@@ -13,13 +13,16 @@ export class TodoBody {
   }[] = []
 
   addTask(): void{
-    this.tasksArray.push(
-      {
-        'taskDesc':this.inputValue,
-        'isCompleted': false
+    if(this.inputValue.trim() != ""){
+      
+      this.tasksArray.push(
+        {
+          'taskDesc':this.inputValue,
+          'isCompleted': false
+      }
+        )
+        this.inputValue = "";
     }
-      )
-    console.log(this.tasksArray)
   }
 
   completeTask(id: number): void{

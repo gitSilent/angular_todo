@@ -1,12 +1,12 @@
-<div class="todo-body">
+<form (submit)="addTask()" class="todo-body">
     <h1>TODO LIST</h1>
-    <input type="text" placeholder="Введите задачу" [(ngModel)]="inputValue">
-    <p>{{inputValue}}</p>
-    <button (click)="addTask()">Добавить</button>
-</div>
+    <input type="text" placeholder="Введите задачу" [(ngModel)]="inputValue" name="task_text">
+    <button  class="btn_add">Добавить</button>
+</form>
 
 <div [ngClass]="{isCompleted: task.isCompleted}" class="task-div" *ngFor="let task   of tasksArray;let i = index">
     <p class="task-div__text">{{task.taskDesc}}</p>
     <button class="btn_done" (click)="completeTask(i)">Выполнено</button>
     <button class="btn_delete" (click)="deleteTask(i)">Удалить</button>
+  
 </div>
