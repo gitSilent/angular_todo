@@ -1,0 +1,12 @@
+.todo-body{
+    max-width: fit-content;
+    margin: auto;
+    margin-bottom: 50px;
+}
+h1{
+    width: fit-content;
+    margin: 0 auto;
+}
+.isCompleted{
+    background-color: gray;
+}
