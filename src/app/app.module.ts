@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { TodoBody } from './todo-body/todo-body.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button'
-
+import {HttpClientModule} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,9 @@ import {MatButtonModule} from '@angular/material/button'
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
