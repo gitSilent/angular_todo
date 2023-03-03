@@ -48,7 +48,10 @@ h1{
 }
 
 .isCompleted{
-    background-color: gray;
+    background-color: rgb(194, 193, 193);
+}
+.isCompleted p{
+    text-decoration: line-through;
 }
 .btn_done{
     background-color: #68d171;
