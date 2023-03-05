@@ -4,9 +4,9 @@
     <button  class="btn_add">Добавить</button>
 </form>
 
-<div [ngClass]="{isCompleted: task.isCompleted}" class="task-div" *ngFor="let task of tasksArray;let i = index">
+<div [ngClass]="{isCompleted: task.isCompleted}" class="task-div" *ngFor="let task of tasksArray">
     <p class="task-div__text">{{task.taskDesc}}</p>
-    <button class="btn_done" (click)="completeTask(i)">Выполнено</button>
-    <button class="btn_delete" (click)="deleteTask(i)">Удалить</button>
+    <button class="btn_done" (click)="completeTask(task._id)">Выполнено</button>
+    <button class="btn_delete" (click)="deleteTask(task._id)">Удалить</button>
   
 </div>

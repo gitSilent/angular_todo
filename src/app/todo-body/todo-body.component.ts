@@ -15,6 +15,7 @@ export class TodoBody implements OnInit {
 
   inputValue: string = "";
   tasksArray: {
+    '_id': string,
     'taskDesc': string,
     'isCompleted': boolean
   }[] = []
@@ -27,35 +28,74 @@ export class TodoBody implements OnInit {
     })
   }
 
-  putTask(task: any){
-    this.http.put("http://localhost:3500/todos",task)
-    .subscribe((response)=>{
-      console.log(response)
-    })
-  }
-
   addTask(): void{
+
     if(this.inputValue.trim() != ""){
-      
-      let task = {
-        'taskDesc':this.inputValue,
-        'isCompleted': false
-    }
+      this.http.post(
+        "http://localhost:3500/todos",
+        {
+          'taskDesc':this.inputValue,
+          'isCompleted': false
+        }
+        ).subscribe((res)=>{
+          console.log(res)
 
-      this.tasksArray.push(task)
-      this.inputValue = "";
-
-      this.putTask(task)
+          let task = {
+                '_id':res['insertedId'],
+                'taskDesc':this.inputValue,
+                'isCompleted': false
+            }
+        
+              this.tasksArray.push(task)
+              this.inputValue = "";
+          
+        })
     }
   }
 
-  completeTask(id: number) :void{
-    this.tasksArray[id].isCompleted = !this.tasksArray[id].isCompleted 
+  completeTask(id: string) :void{
+    for(let el of this.tasksArray){
+      if(el['_id'] === id){
+        this.http.put(
+          "http://localhost:3500/todos",
+          {
+            "todoId" : el['_id'],
+            "changeTo" : !el['isCompleted']
+          }
+          ).subscribe( (data)=>{
+            el['isCompleted'] = !el['isCompleted']
+          }
+          )
+          
+        break;    
+      }
+    }
   }
 
-  deleteTask(id: number){
+  deleteTask(id: string){
     this.tasksArray = this.tasksArray.filter((el,index)=>{
-      return id != index
+      if(id == el["_id"]){
+
+        this.http.request('delete',
+        "http://localhost:3500/todos",
+        { 
+          body: { 
+            "todoId" : el['_id']
+          }
+        }).subscribe( (data)=>{
+            console.log(data)
+          }
+          )
+
+        return false
+      }
+      return true
     })
+    
+
+  }
+
+  updateTask(id: string){
+
   }
 }
