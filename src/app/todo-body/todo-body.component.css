@@ -1,3 +1,4 @@
+
 button{
     width: 100px;
     height: 35px;
@@ -9,7 +10,7 @@ button{
 button:hover{
     cursor: pointer;
 }
-input{
+.input_task{
     border: 1px solid rgba(0, 0, 0, 0.274);
     width: 350px;
     height: 50px;
@@ -25,14 +26,18 @@ input{
     border-radius: 5px;
     padding: 25px;
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
 h1{
     width: fit-content;
     margin: 0 auto;
+    margin-bottom: 35px;
 }
 
 .task-div{
-    height: 60px;
+    max-height:fit-content ;
+    /* height: 60px; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -45,6 +50,18 @@ h1{
 }
 .task-div__text{
     max-width: 60%;
+}
+.div_descImg{
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.task_img{
+    max-height: 150px;
+}
+.task_img:active{
+    transform: scale(2.5) translate(50%);;
+    transform-origin: center;
 }
 
 .isCompleted{

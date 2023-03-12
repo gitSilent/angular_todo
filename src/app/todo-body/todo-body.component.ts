@@ -14,42 +14,79 @@ export class TodoBody implements OnInit {
   }
 
   inputValue: string = "";
+  inputFileValue: string = "";
+  chosenFile: any = "";
+  imgSrc: string = "";
   tasksArray: {
     '_id': string,
     'taskDesc': string,
-    'isCompleted': boolean
+    'isCompleted': boolean,
+    'image': string
   }[] = []
 
+  chooseFile(e: any){
+    let fileType = e.target.files[0].name.split('.')[e.target.files[0].name.split('.').length -1];
+    if(fileType != 'jpg' && fileType != 'jpeg' && fileType != 'png'){
+      alert('Неверный тип файла')
+      this.inputFileValue = ""
+      return
+    }else{
+      this.chosenFile = e.target.files[0];
+      console.log(this.chosenFile)
+    }
+  }
   getTodos(){
     this.http.get("http://localhost:3500/todos")
     .subscribe((response:any)=>{
       console.log(response)
       this.tasksArray = response;
+
+      // let prefix = `data:image/${response.image['imgName'].split(".")[1]};base64`;
+      // // document.getElementById('img').src = `${prefix},${el.data}`;
+      // let src = `${prefix},${response.image['src'].data}`
+
+      // this.imgSrc = response.image
     })
   }
 
   addTask(): void{
 
     if(this.inputValue.trim() != ""){
+
+      console.log(this.chosenFile)
+
+      let formData = new FormData()
+      formData.append('taskDesc', this.inputValue)
+      formData.append('isCompleted', 'false')
+      formData.append('file', this.chosenFile)
+
       this.http.post(
         "http://localhost:3500/todos",
-        {
-          'taskDesc':this.inputValue,
-          'isCompleted': false
-        }
+        formData
         ).subscribe((res)=>{
           console.log(res)
-
-          let task = {
-                '_id':res['insertedId'],
-                'taskDesc':this.inputValue,
-                'isCompleted': false
-            }
+          
+        // if(this.chosenFile){
+          
+        // }
+        //   let task = {
+        //         '_id':res['insertedId'],
+        //         'taskDesc':this.inputValue,
+        //         'isCompleted': false,
+        //         'image': ""
+        //     }
         
-              this.tasksArray.push(task)
+        //       this.tasksArray.push(task)
               this.inputValue = "";
+              this.inputFileValue = "";
+              this.chosenFile = "";
+
+
+        this.getTodos()
           
         })
+
+
     }
   }
 

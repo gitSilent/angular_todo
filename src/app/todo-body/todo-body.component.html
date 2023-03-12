@@ -1,12 +1,18 @@
 <form (submit)="addTask()" class="todo-body">
     <h1>TODO LIST</h1>
-    <input type="text" placeholder="Введите задачу" [(ngModel)]="inputValue" name="task_text">
+    <p>Добавить картинку к записи</p>
+    <input type="file" accept=".png, .jpg, .jpeg" (change)="chooseFile($event)" name="image_input" [(ngModel)]="inputFileValue">
+    <input type="text" placeholder="Введите задачу" [(ngModel)]="inputValue" name="task_text" class="input_task">
     <button  class="btn_add">Добавить</button>
 </form>
 
 <div [ngClass]="{isCompleted: task.isCompleted}" class="task-div" *ngFor="let task of tasksArray">
-    <p class="task-div__text">{{task.taskDesc}}</p>
+    <div class="div_descImg">
+        <p class="task-div__text">{{task.taskDesc}}</p>
+        <img [src]="task.image != '' ? task.image['prefix'] + ',' + task.image['base64Img'] : '' " alt="" class="task_img">
+    </div>
     <button class="btn_done" (click)="completeTask(task._id)">Выполнено</button>
     <button class="btn_delete" (click)="deleteTask(task._id)">Удалить</button>
+    <!-- <img src={{task.image ? task.image.prefix+','+task.image.base64Img` : '' }} alt=""> -->
   
 </div>
